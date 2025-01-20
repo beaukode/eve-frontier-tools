@@ -17,6 +17,7 @@ import Error404 from "./pages/Error404";
 import About from "./pages/About";
 import Calculate from "./pages/Calculate";
 import Dev from "./pages/Dev";
+import DevWeb3 from "./pages/DevWeb3";
 
 function App() {
   const location = useLocation();
@@ -95,6 +96,7 @@ function App() {
         <Route path="/explore/*" element={<Explore />} />
         <Route path="/calculate/*" element={<Calculate />} />
         <Route path="/dev" element={<Dev />} />
+        <Route path="/devweb3" element={<DevWeb3 />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
