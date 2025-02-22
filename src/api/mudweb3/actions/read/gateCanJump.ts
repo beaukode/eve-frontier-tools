@@ -1,9 +1,7 @@
-import { encodeFunctionData } from "viem";
 import { MudWeb3ClientBase } from "../../types";
 import { eveworld } from "../../eveworld";
 import { characterGetId } from "./characterGetId";
 import { systemSimulate } from "./systemSimulate";
-import { worldAbi } from "../../abi";
 
 export type GateCanJumpParameters = {
   sourceGateId: string;
@@ -31,16 +29,11 @@ export async function gateCanJump(
     throw new Error(`Character not found for address ${address}`);
   }
 
-  const data = encodeFunctionData({
-    abi: worldAbi,
-    functionName: "canJump",
-    args: [characterId, BigInt(sourceGateId), BigInt(destinationGateId)],
-  });
-
   const r = await systemSimulate(client, {
     systemAddress:
       eveworld.namespaces.eveworld.systems.SmartGateSystem.systemId,
-    data,
+    functionName: "canJump",
+    args: [characterId, BigInt(sourceGateId), BigInt(destinationGateId)],
   });
-  return Boolean(BigInt(r));
+  return r;
 }
