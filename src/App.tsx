@@ -9,6 +9,7 @@ import Dev from "@/pages/Dev";
 import DApps from "@/dapps/DApps";
 import Header from "./components/layout/Header";
 import DappHeader from "./components/layout/DappHeader";
+import DappFooter from "./components/layout/DappFooter";
 
 function App() {
   const location = useLocation();
@@ -19,10 +20,10 @@ function App() {
     <Paper
       elevation={0}
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
         bgcolor: "background.default",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column",        
       }}
     >
       {isDApp ? <DappHeader /> : <Header />}
@@ -35,6 +36,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
+      {isDApp && <DappFooter />}
     </Paper>
   );
 }
