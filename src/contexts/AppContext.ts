@@ -1,4 +1,5 @@
 import React from "react";
+import { Hex } from "viem";
 import { getSolarsystems, getTypes } from "@/api/stillness";
 import { createSolarSystemsIndex } from "@/tools/solarSystemsIndex";
 import { MudSqlClient } from "@/api/mudsql";
@@ -6,10 +7,24 @@ import { useQuery } from "@tanstack/react-query";
 import { createTypesIndex } from "@/tools/typesIndex";
 import { MudWeb3Client } from "@/api/mudweb3";
 
+export type SmartCharacter =
+  | {
+      isConnected: false;
+      isConnecting: boolean;
+    }
+  | {
+      isConnected: true;
+      isConnecting: boolean;
+      address: Hex;
+      characterId?: bigint;
+      characterName?: string;
+    };
+
 interface AppContextProps {
   mudSql: MudSqlClient;
   mudWeb3: MudWeb3Client;
   showConnectDialog: () => void;
+  smartCharacter: SmartCharacter;
 }
 
 export const AppContext = React.createContext<AppContextProps | undefined>(
@@ -64,4 +79,9 @@ export function useTypesIndex() {
   });
 
   return query.data;
+}
+
+export function useSmartCharacter() {
+  const { smartCharacter } = useAppContext();
+  return smartCharacter;
 }
